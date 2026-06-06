@@ -84,7 +84,21 @@ void tambahAnggota() {
 }
 
 void tampilAnggota() {
+    if(head == NULL) {
+        cout << "Data anggota kosong.\n";
+        return;
+    }
 
+    Anggota* temp = head;
+
+    cout << "\n====== Daftar Anggota ======\n";
+    while(temp != NULL) {
+        cout << "ID   : " << temp->id << endl;
+        cout << "Nama : " << temp->nama << endl;
+        cout << "------------------\n";
+
+        temp = temp->next;
+    }
 }
 
 void cariAnggota() {
