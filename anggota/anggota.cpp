@@ -102,7 +102,25 @@ void tampilAnggota() {
 }
 
 void cariAnggota() {
+    int idCari;
 
+    cout << "Masukkan ID : ";
+    cin >> idCari;
+
+    Anggota* temp = head;
+
+    while(temp != NULL) {
+        if(temp->id == idCari) {
+            cout << "\nData ditemukan\n";
+            cout << "ID   : " << temp->id << endl;
+            cout << "Nama : " << temp->nama << endl;
+            return;
+        }
+
+        temp = temp->next;
+    }
+
+    cout << "Anggota tidak ditemukan.\n";
 }
 
 void hapusAnggota() {
