@@ -124,5 +124,44 @@ void cariAnggota() {
 }
 
 void hapusAnggota() {
+    int idHapus;
 
+    cout << "Masukkan ID yang akan di hapus : ";
+    cin >> idHapus;
+
+    if(head == NULL) {
+        cout << "Data kosong.\n";
+        return;
+    }
+
+    if(head->id == idHapus) {
+        Anggota* hapus = head;
+        head = head->next;
+
+        delete hapus;
+        simpanData();
+
+        cout << "Anggota berhasil dihapus.\n";
+        return;
+    }
+
+    Anggota* temp = head;
+
+    while(temp->next != NULL && temp->next->id != idHapus) {
+        temp = temp->next;
+    }
+
+    if(temp->next == NULL) {
+        cout << "Anggota tidak ditemukan.\n";
+        return;
+    }
+
+    Anggota* hapus = temp->next;
+    temp->next = hapus->next;
+
+    delete hapus;
+
+    simpanData();
+
+    cout << "Anggota berhasil dihapus.\n";
 }
