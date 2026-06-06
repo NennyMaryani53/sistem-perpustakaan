@@ -1,1 +1,96 @@
 #include "anggota.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+using namespace std;
+
+Anggota* head = NULL;
+
+// load dari file ke Linked List
+void loadData() {
+    ifstream file("anggota/anggota.txt");
+
+    string line;
+
+    while(getline(file, line)) {
+        stringstream ss(line);
+
+        string idstr, nama;
+
+        getline(ss, idstr, '|');
+        getline(ss, nama);
+
+        Anggota* baru = new Anggota;
+        baru->id = stoi(idstr);
+        baru->nama = nama;
+        baru->next = NULL;
+
+        if(head == NULL) {
+            head = baru;
+        }else{
+            Anggota* temp = head;
+
+            while(temp->next != NULL)
+                temp = temp->next;
+
+            temp->next = baru;
+        }
+    }
+
+    file.close();
+}
+
+// simpan Linked List ke file
+void simpanData() {
+    ofstream file("anggota/anggota.txt");
+    
+    Anggota* temp = head;
+
+    while(temp != NULL) {
+        file << temp->id << "|" << temp->nama << endl;
+        temp = temp->next;
+    }
+
+    file.close();
+}
+
+void tambahAnggota() {
+    Anggota* baru = new Anggota;
+
+    cout << "ID Anggota : ";
+    cin >> baru->id;
+    cin.ignore();
+
+    cout << "Nama Anggota : ";
+    getline(cin, baru->nama);
+
+    baru->next = NULL;
+
+    if(head == NULL) {
+        head = baru;
+    }else{
+        Anggota* temp = head;
+
+        while(temp->next != NULL) 
+            temp = temp->next;
+
+        temp->next = baru;
+    }
+
+    simpanData();
+
+    cout << "Anggota berhasil ditambahkan.\n";
+}
+
+void tampilAnggota() {
+
+}
+
+void cariAnggota() {
+
+}
+
+void hapusAnggota() {
+
+}

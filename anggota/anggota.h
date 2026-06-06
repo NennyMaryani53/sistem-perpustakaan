@@ -10,6 +10,8 @@ struct Anggota {
     Anggota* next;
 };
 
+void loadData();
+void simpanData();
 void tambahAnggota();
 void tampilAnggota();
 void cariAnggota();
