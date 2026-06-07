@@ -9,7 +9,7 @@ using namespace std;
 Anggota* head = NULL;
 
 // load dari file ke Linked List
-void loadData() {
+void loadAnggota() {
     ifstream file("anggota/anggota.txt");
 
     string line;
@@ -43,7 +43,7 @@ void loadData() {
 }
 
 // simpan Linked List ke file
-void simpanData() {
+void simpanAnggota() {
     ofstream file("anggota/anggota.txt");
     
     Anggota* temp = head;
@@ -79,7 +79,7 @@ void tambahAnggota() {
         temp->next = baru;
     }
 
-    simpanData();
+    simpanAnggota();
 
     pushRiwayat(string("Tambah Anggota : ") + baru->nama);
 
@@ -142,7 +142,7 @@ void hapusAnggota() {
         head = head->next;
 
         delete hapus;
-        simpanData();
+        simpanAnggota();
 
         cout << "Anggota berhasil dihapus.\n";
         return;
@@ -164,7 +164,7 @@ void hapusAnggota() {
 
     delete hapus;
 
-    simpanData();
+    simpanAnggota();
 
     pushRiwayat("Hapus Anggota ID: " + to_string(idHapus));
 
