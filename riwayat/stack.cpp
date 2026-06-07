@@ -71,5 +71,14 @@ void tampilRiwayat() {
 }
 
 void undoAktivitas() {
+    if(riwayat.empty()) {
+        cout << "Tidak ada aktivitas untuk di-undo.\n";
+        return;
+    }
 
+    cout << "Undo : " << riwayat.top() << endl;
+
+    riwayat.pop();
+    
+    simpanData();
 }
