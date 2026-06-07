@@ -1,5 +1,4 @@
 #include "binary_search.h"
-#include <iostream>
 
 using namespace std;
 
