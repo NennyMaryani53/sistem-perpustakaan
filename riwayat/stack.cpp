@@ -9,7 +9,7 @@ using namespace std;
 stack<string> riwayat;
 
 // load dari file ke stack
-void loadData() {
+void loadRiwayat() {
     ifstream file("riwayat/riwayat.txt");
 
     vector<string> data;
@@ -27,7 +27,7 @@ void loadData() {
 }
 
 // simpan stack ke file
-void simpanData() {
+void simpanRiwayat() {
     ofstream file("riwayat/riwayat.txt");
 
     stack<string> temp = riwayat;
@@ -49,7 +49,7 @@ void simpanData() {
 void pushRiwayat(string aktivitas) {
     riwayat.push(aktivitas);
 
-    simpanData();
+    simpanRiwayat();
 
     cout << "Riwayat berhasil ditambahkan.\n";
 }
@@ -80,5 +80,5 @@ void undoAktivitas() {
 
     riwayat.pop();
     
-    simpanData();
+    simpanRiwayat();
 }
