@@ -4,8 +4,8 @@
 #include <string>
 using namespace std;
 
-void loadData();
-void simpanData();
+void loadRiwayat();
+void simpanRiwayat();
 
 void pushRiwayat(string aktivitas);
 void tampilRiwayat();
