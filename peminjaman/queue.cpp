@@ -108,5 +108,20 @@ void tampilAntrian() {
 }
 
 void layaniAntrian() {
+    if(antrianPeminjaman.empty()) {
+        cout << "Antrian kosong.\n";
+        return;
+    }
 
+    cout << "\n====== Melayani Antrian ======\n";
+    cout << "ID Anggota : " << antrianPeminjaman.front().idAnggota << endl;
+    cout << "Nama       : " << antrianPeminjaman.front().nama << endl;
+    cout << "Buku       : " << antrianPeminjaman.front().judulBuku << endl;
+    cout << "Tanggal    : " << antrianPeminjaman.front().tanggalPinjam << endl;
+
+    antrianPeminjaman.pop();
+
+    simpanData();
+
+    cout << "\nAntrian berhasil dilayani\n";
 }
