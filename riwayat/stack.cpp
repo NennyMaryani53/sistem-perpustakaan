@@ -55,7 +55,19 @@ void pushRiwayat(string aktivitas) {
 }
 
 void tampilRiwayat() {
+    if(riwayat.empty()) {
+        cout << "Riwayat kosong.\n";
+        return;
+    }
 
+    stack<string> temp = riwayat;
+
+    cout << "\n====== Riwayat Aktivitas ======\n";
+
+    while(!temp.empty()) {
+        cout << "- " << temp.top() << endl;
+        temp.pop();
+    }
 }
 
 void undoAktivitas() {
