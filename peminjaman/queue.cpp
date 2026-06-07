@@ -81,7 +81,30 @@ void tambahAntrian() {
 }
 
 void tampilAntrian() {
+    if(antrianPeminjaman.empty()) {
+        cout << "Antrian kosong.\n";
+        return;
+    }
 
+    queue<Antrian> temp = antrianPeminjaman;
+
+    cout << "\n====== Daftar Antrian ======\n";
+    while (!temp.empty()) {
+        cout << "ID Anggota : "
+             << temp.front().idAnggota << endl;
+
+        cout << "Nama       : "
+             << temp.front().nama << endl;
+
+        cout << "Buku       : "
+             << temp.front().judulBuku << endl;
+
+        cout << "Tanggal    : "
+             << temp.front().tanggalPinjam << endl;
+
+        cout << "----------------------------\n";
+        temp.pop();
+    }
 }
 
 void layaniAntrian() {
