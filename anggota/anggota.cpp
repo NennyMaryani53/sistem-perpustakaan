@@ -1,4 +1,5 @@
 #include "anggota.h"
+#include "../riwayat/stack.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -79,6 +80,8 @@ void tambahAnggota() {
     }
 
     simpanData();
+
+    pushRiwayat(string("Tambah Anggota : ") + baru->nama);
 
     cout << "Anggota berhasil ditambahkan.\n";
 }
@@ -162,6 +165,8 @@ void hapusAnggota() {
     delete hapus;
 
     simpanData();
+
+    pushRiwayat("Hapus Anggota ID: " + to_string(idHapus));
 
     cout << "Anggota berhasil dihapus.\n";
 }
