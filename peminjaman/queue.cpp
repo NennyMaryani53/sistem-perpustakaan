@@ -65,8 +65,34 @@ void tambahAntrian() {
     cin >> a.idAnggota;
     cin.ignore();
 
-    cout << "Nama Peminjam : ";
-    getline(cin, a.nama);
+    ifstream file("anggota/anggota.txt");
+
+    string line;
+    bool ditemukan = false;
+
+    while(getline(file, line)) {
+        stringstream ss(line);
+
+        string idstr, nama;
+
+        getline(ss, idstr, '|');
+        getline(ss, nama);
+
+        if(stoi(idstr) == a.idAnggota) {
+            a.nama = nama;
+            ditemukan = true;
+            break;
+        }
+    }
+
+    file.close();
+
+    if(!ditemukan) {
+        cout << "Anggota tidak ditemukan.\n";
+        return;
+    }
+
+    cout << "Nama Peminjam : " << a.nama << endl;
 
     cout << "Judul Buku : ";
     getline(cin, a.judulBuku);
