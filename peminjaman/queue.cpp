@@ -1,1 +1,164 @@
 #include "queue.h"
+#include "../riwayat/stack.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <queue>
+
+using namespace std;
+
+queue<Antrian> antrianPeminjaman;
+
+void loadPeminjaman() {
+    ifstream file("peminjaman/antrian.txt");
+    
+    string line;
+    
+    while (getline(file, line)) {
+        stringstream ss(line);
+    
+        string idstr;
+
+        Antrian a;
+        
+        getline(ss, idstr, '|');
+        
+        if(idstr.empty()) {
+            continue;
+        }
+
+        a.idAnggota = stoi(idstr);
+    
+        getline(ss, a.nama, '|');
+        getline(ss, a.judulBuku, '|');
+        getline(ss, a.tanggalPinjam);
+    
+        antrianPeminjaman.push(a);
+    }
+    
+    file.close();
+}
+
+
+
+void simpanPeminjaman() {
+    ofstream file("peminjaman/antrian.txt");
+
+    queue<Antrian> temp = antrianPeminjaman;
+
+    while(!temp.empty()) {
+        file << temp.front().idAnggota << "|"
+             << temp.front().nama << "|"
+             << temp.front().judulBuku << "|"
+             << temp.front().tanggalPinjam << endl;
+
+        temp.pop();
+    }
+
+    file.close();
+}
+
+void tambahAntrian() {
+    Antrian a;
+
+    cout << "ID Anggota : ";
+    cin >> a.idAnggota;
+    cin.ignore();
+
+    ifstream file("anggota/anggota.txt");
+
+    string line;
+    bool ditemukan = false;
+
+    while(getline(file, line)) {
+        stringstream ss(line);
+
+        string idstr, nama;
+
+        getline(ss, idstr, '|');
+        getline(ss, nama);
+
+        if(stoi(idstr) == a.idAnggota) {
+            a.nama = nama;
+            ditemukan = true;
+            break;
+        }
+    }
+
+    file.close();
+
+    if(!ditemukan) {
+        cout << "Anggota tidak ditemukan.\n";
+        return;
+    }
+
+    cout << "Nama Peminjam : " << a.nama << endl;
+
+    cout << "Judul Buku : ";
+    getline(cin, a.judulBuku);
+
+    cout << "Tanggal Pinjam : ";
+    getline(cin, a.tanggalPinjam);
+
+    antrianPeminjaman.push(a);
+
+    simpanPeminjaman();
+
+    pushRiwayat (
+        "Ajukan Peminjaman ID : " + a.nama + " - " + a.judulBuku
+    );
+
+    cout << "Peminjaman masuk antrian.\n";
+}
+
+void tampilAntrian() {
+    if(antrianPeminjaman.empty()) {
+        cout << "Antrian kosong.\n";
+        return;
+    }
+
+    queue<Antrian> temp = antrianPeminjaman;
+
+    cout << "\n====== Daftar Antrian ======\n";
+    while (!temp.empty()) {
+        cout << "ID Anggota : "
+             << temp.front().idAnggota << endl;
+
+        cout << "Nama       : "
+             << temp.front().nama << endl;
+
+        cout << "Buku       : "
+             << temp.front().judulBuku << endl;
+
+        cout << "Tanggal    : "
+             << temp.front().tanggalPinjam << endl;
+
+        cout << "----------------------------\n";
+        temp.pop();
+    }
+}
+
+void layaniAntrian() {
+    if(antrianPeminjaman.empty()) {
+        cout << "Antrian kosong.\n";
+        return;
+    }
+
+    Antrian a = antrianPeminjaman.front();
+    
+    cout << "\n====== Melayani Antrian ======\n";
+    cout << "ID Anggota : " << antrianPeminjaman.front().idAnggota << endl;
+    cout << "Nama       : " << antrianPeminjaman.front().nama << endl;
+    cout << "Buku       : " << antrianPeminjaman.front().judulBuku << endl;
+    cout << "Tanggal    : " << antrianPeminjaman.front().tanggalPinjam << endl;
+
+    pushRiwayat (
+        "Layani Peminjaman ID : " + a.nama + " - " + a.judulBuku
+    );
+
+    antrianPeminjaman.pop();
+
+    simpanPeminjaman();
+
+    cout << "\nAntrian berhasil dilayani\n";
+}
