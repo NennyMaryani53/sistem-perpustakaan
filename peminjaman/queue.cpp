@@ -1,4 +1,5 @@
 #include "queue.h"
+#include "../riwayat/stack.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -8,7 +9,7 @@ using namespace std;
 
 queue<Antrian> antrianPeminjaman;
 
-void loadData() {
+void loadPeminjaman() {
     ifstream file("peminjaman/antrian.txt");
     
     string line;
@@ -40,7 +41,7 @@ void loadData() {
 
 
 
-void simpanData() {
+void simpanPeminjaman() {
     ofstream file("peminjaman/antrian.txt");
 
     queue<Antrian> temp = antrianPeminjaman;
@@ -75,7 +76,11 @@ void tambahAntrian() {
 
     antrianPeminjaman.push(a);
 
-    simpanData();
+    simpanPeminjaman();
+
+    pushRiwayat (
+        "Ajukan Peminjaman ID : " + a.nama + " - " + a.judulBuku
+    );
 
     cout << "Peminjaman masuk antrian.\n";
 }
@@ -113,15 +118,21 @@ void layaniAntrian() {
         return;
     }
 
+    Antrian a = antrianPeminjaman.front();
+    
     cout << "\n====== Melayani Antrian ======\n";
     cout << "ID Anggota : " << antrianPeminjaman.front().idAnggota << endl;
     cout << "Nama       : " << antrianPeminjaman.front().nama << endl;
     cout << "Buku       : " << antrianPeminjaman.front().judulBuku << endl;
     cout << "Tanggal    : " << antrianPeminjaman.front().tanggalPinjam << endl;
 
+    pushRiwayat (
+        "Layani Peminjaman ID : " + a.nama + " - " + a.judulBuku
+    );
+
     antrianPeminjaman.pop();
 
-    simpanData();
+    simpanPeminjaman();
 
     cout << "\nAntrian berhasil dilayani\n";
 }

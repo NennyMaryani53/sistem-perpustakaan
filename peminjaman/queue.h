@@ -11,9 +11,8 @@ struct Antrian {
     string tanggalPinjam;
 };
 
-void loadData();
-void simpanData();
-
+void loadPeminjaman();
+void simpanPeminjaman();
 
 void tambahAntrian();
 void tampilAntrian();
