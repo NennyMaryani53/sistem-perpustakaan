@@ -6,10 +6,14 @@
 
 using namespace std;
 
+namespace {
+    const string FILE_BUKU = "buku/buku.txt";
+}
+
 vector<Buku> daftarBuku;
 
 void loadBuku(){
-    ifstream file("buku.txt");
+    ifstream file(FILE_BUKU);
 
     if(!file.is_open()){
         return;
@@ -41,7 +45,7 @@ void loadBuku(){
 }
 
 void simpanBuku() {
-    ofstream file("buku.txt");
+    ofstream file(FILE_BUKU, ios::trunc);
 
     for(Buku b: daftarBuku){
         file << b.id << "|"
@@ -77,6 +81,19 @@ void tambahBuku() {
 }
 
 void tampilBuku(){
+    if(daftarBuku.empty()){
+        cout << "\nData buku kosong.\n";
+        return;
+    }
+
+    cout << "\n=== Daftar Buku ===\n";
+    for(Buku b: daftarBuku){
+        cout << "ID : " << b.id << endl;
+        cout << "Judul : " << b.judul << endl;
+        cout << "Penulis : " << b.penulis << endl;
+        cout << "Stok : " << b.stok << endl;
+        cout << "--------------------\n";
+    } 
 
 }
 
