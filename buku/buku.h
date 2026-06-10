@@ -11,6 +11,9 @@ struct Buku {
     int stok;
 };
 
+void loadBuku();
+void simpanBuku();
+
 void tambahBuku();
 void tampilBuku();
 void editBuku();
