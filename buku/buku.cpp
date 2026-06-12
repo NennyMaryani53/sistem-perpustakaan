@@ -6,101 +6,131 @@
 
 using namespace std;
 
-namespace {
-    const string FILE_BUKU = "buku/buku.txt";
-}
-
 vector<Buku> daftarBuku;
 
-void loadBuku(){
-    ifstream file(FILE_BUKU);
+// ================= LOAD =================
+void loadBuku() {
+    ifstream file("buku/buku.txt");
 
-    if(!file.is_open()){
-        return;
-    }
+    if (!file.is_open()) return;
 
     daftarBuku.clear();
 
-    string baris;
+    string line;
 
-    while(getline(file, baris)){
-        stringstream ss(baris);
+    while (getline(file, line)) {
+        stringstream ss(line);
 
         Buku b;
-        string stokStr;
+        string idStr, stokStr;
 
-        getline(ss, baris, '|');
-        b.id = stoi(baris);
-
+        getline(ss, idStr, '|');
         getline(ss, b.judul, '|');
         getline(ss, b.penulis, '|');
         getline(ss, stokStr, '|');
 
+        b.id = stoi(idStr);
         b.stok = stoi(stokStr);
 
         daftarBuku.push_back(b);
-   }
+    }
 
-   file.close();
+    file.close();
 }
 
+// ================= SIMPAN =================
 void simpanBuku() {
-    ofstream file(FILE_BUKU, ios::trunc);
+    ofstream file("buku/buku.txt");
 
-    for(Buku b: daftarBuku){
+    for (Buku b : daftarBuku) {
         file << b.id << "|"
              << b.judul << "|"
              << b.penulis << "|"
              << b.stok << endl;
     }
-     file.close();
 
+    file.close();
 }
 
-void tambahBuku() {
+void tambahBuku(){
     Buku b;
-     cout << "ID buku :";
-     cin >> b.id;
-     cin.ignore();
 
-     cout << "Judul Buku :";
-     getline(cin, b.judul);
+    cout << "ID Buku: ";
+    cin >> b.id;
+    cin.ignore();
 
-     cout << "Penulis :";
-     getline(cin, b.penulis);
+    cout << "Judul Buku: ";
+    getline(cin, b.judul);
 
-     cout << "Stok :";
-     cin >> b.stok;
+    cout << "Penulis : ";
+    getline(cin, b.penulis);
 
-     daftarBuku.push_back(b);
+    cout << "Stok: ";
+    cin >> b.stok;
 
-     simpanBuku();
+    daftarBuku.push_back(b);
 
-     cout << "\nBuku berhasil ditambahkan.\n";
+    simpanBuku();
+
+    cout << "\nBuku berhasil ditambahkan!";
 
 }
 
 void tampilBuku(){
     if(daftarBuku.empty()){
-        cout << "\nData buku kosong.\n";
+        cout << "\nTidak ada buku yang tersedia.\n";
         return;
     }
 
-    cout << "\n=== Daftar Buku ===\n";
-    for(Buku b: daftarBuku){
-        cout << "ID : " << b.id << endl;
-        cout << "Judul : " << b.judul << endl;
-        cout << "Penulis : " << b.penulis << endl;
-        cout << "Stok : " << b.stok << endl;
-        cout << "--------------------\n";
-    } 
-
+    cout << "\n=== DAFTAR BUKU ===\n";
+    for(Buku b : daftarBuku){
+        cout << "ID: " << b.id << endl;
+        cout << "Judul: " << b.judul << endl;
+        cout << "Penulis: " << b.penulis << endl;
+        cout << "Stok: " << b.stok << endl;
+        cout << "-----------------------\n";
+    }
 }
 
-void editBuku(){
 
+void editBuku(){
+    int id;
+    cout << "Masukan ID buku: ";
+    cin >> id;
+    cin.ignore();
+
+    for(Buku &b : daftarBuku){
+        if(b.id == id){
+            cout << "Judul Buku: ";
+            getline(cin, b.judul);
+
+            cout << "Penulis : ";
+            getline(cin, b.penulis);
+
+            cout << "Stok: ";
+            cin >> b.stok;
+            cin.ignore();
+            simpanBuku();
+            cout << "\nBuku berhasil diupdate.\n";
+            return;
+        }
+    }
+    cout << "\nBuku tidak ditemukan.\n";
 }
 
 void hapusBuku(){
+    int id;
+    cout << "Masukan ID buku: ";
+    cin >> id;
+
+    for(int i=0; i<daftarBuku.size(); i++){
+        if(daftarBuku[i].id == id){
+            daftarBuku.erase(daftarBuku.begin() + i);
+            simpanBuku();
+            cout << "\nBuku berhasil dihapus.\n";
+            return;
+        }
+    }
+    cout << "\nBuku tidak ditemukan.\n";
 
 }
